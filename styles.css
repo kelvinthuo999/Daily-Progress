@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background: url("volodymyr-hryshchenko-L0oJ4Dlfyuo-unsplash.jpg");
-    /* background-color: #f5f5f5; */
+    /* background: url("volodymyr-hryshchenko-L0oJ4Dlfyuo-unsplash.jpg"); */
+    background-color: #f5f5f5;
     margin: 0;
     padding: 20px;
     display: flex;
