@@ -12,11 +12,20 @@
     <div class="container">
         <h1>Daily Progress</h1>
         <form>
-            <label>What have you achieved today that is meaningful?</label>
+            <label for="progress-input">What have you achieved today that is meaningful?</label>
             <input type="text" id="progress-input" placeholder="Enter your achievement...">
+            <label for="progress-field">Select the field of progress:</label>
+            <select id="progress-field" required>
+                <option value=""> -- Select a field --</option>
+                <option value="Job Hunt">Job Hunt</option>
+                <option value="Skills">Skills</option>
+                <option value="Financial Status"> Financial Status</option>
+
+            </select>
             <button type="submit">Save</button>
         </form>
     </div>
+
 
     <!-- Use type="module" to properly import Firebase -->
     <script type="module" src="script.js"></script>
