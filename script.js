@@ -1,4 +1,3 @@
-// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, doc, deleteDoc } 
   from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
@@ -13,7 +12,7 @@ const firebaseConfig = {
     appId: "1:340735874860:web:78e835d8f3582b91b7be89"
 };
 
-// Initialize Firebase
+// Initializing Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entriesContainer.classList.add("entries-container");
     document.querySelector(".container").appendChild(entriesContainer);
 
-    // Save entry to Firestore
+    // Saving entry to database
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const entry = input.value.trim();
@@ -48,10 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
         fieldSelect.value = "";
     });
 
-    // Fetch & display grouped entries by date
+    // Fetching and displaying recorded entries
     const q = query(collection(db, "progressEntries"), orderBy("timestamp", "desc"));
     onSnapshot(q, (snapshot) => {
-        entriesContainer.innerHTML = ""; // Clear before updating
+        entriesContainer.innerHTML = "";
 
         const groupedEntries = {};
 
@@ -70,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
             groupedEntries[date].push({ id: doc.id, ...data });
         });
 
-        // Render grouped entries
         Object.keys(groupedEntries).forEach(date => {
             const tile = document.createElement("div");
             tile.classList.add("entry-tile");
@@ -84,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 li.textContent = `${entry.text} (${entry.field})`;
                 li.classList.add("entry-item");
 
-                // Create a delete button (hidden by default)
                 const deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "❌ Delete";
                 deleteBtn.classList.add("delete-btn", "hidden");
@@ -93,11 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 li.appendChild(deleteBtn);
                 list.appendChild(li);
 
-                // Show delete button when clicked
                 li.addEventListener("click", (e) => {
-                    e.stopPropagation(); // Prevent event from bubbling up
-                    hideAllDeleteButtons(); // Hide other buttons first
-                    deleteBtn.classList.remove("hidden"); // Show delete button
+                    e.stopPropagation();
+                    hideAllDeleteButtons(); 
+                    deleteBtn.classList.remove("hidden"); 
                 });
             });
 
@@ -107,14 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Function to hide all delete buttons
     function hideAllDeleteButtons() {
         document.querySelectorAll(".delete-btn").forEach(btn => {
             btn.classList.add("hidden");
         });
     }
 
-    // Hide delete buttons when clicking anywhere else
     document.addEventListener("click", hideAllDeleteButtons);
 
     // Delete function
